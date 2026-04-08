@@ -228,7 +228,7 @@ export default function SearchBar() {
             }
           }}
           placeholder="Search products..."
-          className="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-200 pr-10"
+          className="w-full bg-black text-white border border-[#FFBF00]/20 rounded-lg px-4 py-2 focus:outline-none pr-10"
           aria-label="Search"
           aria-expanded={isOpen}
           aria-autocomplete="list"

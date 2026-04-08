@@ -51,11 +51,11 @@ export default async function ProductDetailsPage({ params }: Props) {
 
       {/* Info */}
       <div>
-        <h1 className="text-2xl font-semibold mb-4">{product.title}</h1>
+        <h1 className="textColor text-2xl font-semibold mb-4">{product.title}</h1>
 
-        <p className="text-gray-500 mb-6">{product.description}</p>
+        <p className="text-yellow-500 mb-6">{product.description}</p>
 
-        <p className="text-xl font-bold mb-4">${product.price}</p>
+        <p className="textColor text-xl font-bold mb-4">${product.price}</p>
 
         <AddToCartButton
           product={{

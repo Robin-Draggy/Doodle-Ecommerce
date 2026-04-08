@@ -24,3 +24,24 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.borderColor{
+  border: 1px solid #FFBF00;
+  opacity: 0.2;
+}
+
+.bgColor{
+  background-color: #FFBF00;
+}
+
+.textColor{
+  color: #FFBF00;
+}
+
+.golden-shadow{
+  box-shadow: 0 4px 4px 0 #FFBF00;
+}
+
+.thin-border{
+  border: 0.1px solid #FFBF00;
+}

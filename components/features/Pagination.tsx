@@ -29,7 +29,7 @@ export const Pagination = ({ currentPage, totalPages }: Props) => {
       <button
         disabled={currentPage === 1}
         onClick={() => changePage(currentPage - 1)}
-        className="px-3 py-1 border rounded disabled:opacity-50 hover:scale-95 transition cursor-pointer"
+        className="px-3 py-1 thin-border textColor rounded disabled:opacity-50 hover:scale-95 transition cursor-pointer"
       >
         Prev
       </button>
@@ -39,9 +39,9 @@ export const Pagination = ({ currentPage, totalPages }: Props) => {
         <button
           key={page}
           onClick={() => changePage(page)}
-          className={`px-3 py-1 rounded border ${
+          className={`px-3 py-1 rounded thin-border textColor ${
             currentPage === page
-              ? "bg-black text-white"
+              ? "bg-black"
               : "hover:bg-[#2d3436]/30 transition cursor-pointer"
           }`}
         >
@@ -53,7 +53,7 @@ export const Pagination = ({ currentPage, totalPages }: Props) => {
       <button
         disabled={currentPage === totalPages}
         onClick={() => changePage(currentPage + 1)}
-        className="px-3 py-1 border rounded disabled:opacity-50 hover:scale-95 transition cursor-pointer"
+        className="px-3 py-1 thin-border textColor rounded disabled:opacity-50 hover:scale-95 transition cursor-pointer"
       >
         Next
       </button>

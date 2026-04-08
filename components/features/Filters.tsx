@@ -86,7 +86,7 @@ export const Filters = ({ categories }: Props) => {
       <select
         value={selectedCategory}
         onChange={(e) => handleCategory(e.target.value)}
-        className="border border-gray-200 bg-black rounded-lg px-4 py-2 focus:outline-none"
+        className="border border-[#FFBF00]/20 textColor bg-black rounded-lg px-4 py-2 focus:outline-none"
       >
         <option value="">All Categories</option>
         {categories.map((cat) => (
@@ -102,7 +102,7 @@ export const Filters = ({ categories }: Props) => {
         placeholder="Min Price"
         value={min}
         onChange={(e) => setMin(e.target.value)}
-        className="border border-gray-200 rounded-lg px-4 py-2 w-32 focus:outline-none"
+        className="border border-[#FFBF00]/20 textColor rounded-lg px-4 py-2 w-32 focus:outline-none"
       />
 
       {/* Max Price */}
@@ -111,14 +111,14 @@ export const Filters = ({ categories }: Props) => {
         placeholder="Max Price"
         value={max}
         onChange={(e) => setMax(e.target.value)}
-        className="border border-gray-200 rounded-lg px-4 py-2 w-32 focus:outline-none"
+        className="border border-[#FFBF00]/20 textColor rounded-lg px-4 py-2 w-32 focus:outline-none"
       />
 
       {/* Sort */}
       <select
         value={selectedSort}
         onChange={(e) => handleSort(e.target.value)}
-        className="border border-gray-200 rounded-lg bg-black px-4 py-2 focus:outline-none"
+        className="border border-[#FFBF00]/20 textColor rounded-lg bg-black px-4 py-2 focus:outline-none"
       >
         <option value="">Sort</option>
         <option value="price-asc">Price: Low → High</option>
@@ -128,7 +128,7 @@ export const Filters = ({ categories }: Props) => {
       {/* Reset Button */}
       <button
         onClick={handleReset}
-        className="px-4 py-2 border border-gray-200 rounded-lg hover:scale-105 transition cursor-pointer"
+        className="px-4 py-2 border border-[#FFBF00]/20 textColor rounded-lg hover:scale-105 transition cursor-pointer"
       >
         Reset
       </button>
