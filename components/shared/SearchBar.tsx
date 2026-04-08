@@ -5,7 +5,16 @@ import { searchProducts } from "@/services/products";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDebouncedCallback } from "@/hooks/useDebounce";
-import { XIcon } from "lucide-react";
+import { 
+  Search, 
+  X, 
+  Clock, 
+  TrendingUp, 
+  ArrowRight,
+  Loader2,
+  Package,
+  Sparkles
+} from "lucide-react";
 
 interface Product {
   id: number;
@@ -32,7 +41,7 @@ export default function SearchBar() {
     const stored = localStorage.getItem("recentSearches");
     if (stored) {
       try {
-        setRecentSearches(JSON.parse(stored).slice(0, 3));
+        setRecentSearches(JSON.parse(stored).slice(0, 5));
       } catch (e) {
         console.error("Failed to parse recent searches", e);
       }
@@ -45,7 +54,7 @@ export default function SearchBar() {
 
     setRecentSearches((prev) => {
       const filtered = prev.filter((s) => s !== searchTerm);
-      const updated = [searchTerm, ...filtered].slice(0, 3);
+      const updated = [searchTerm, ...filtered].slice(0, 5);
       localStorage.setItem("recentSearches", JSON.stringify(updated));
       return updated;
     });
@@ -181,31 +190,38 @@ export default function SearchBar() {
       <button
         key={item.id}
         onClick={() => handleProductClick(item.id, item.title)}
-        className={`w-full flex items-center gap-3 p-3 transition-colors text-left cursor-pointer ${
+        className={`w-full flex items-center gap-3 p-3 transition-all duration-200 text-left cursor-pointer group ${
           selectedIndex === index
-            ? "bg-gray-100"
-            : "hover:bg-[#2d3436]/30 ="
+            ? "bg-gradient-to-r from-[#FFBF00]/10 to-transparent border-l-2 border-[#FFBF00]"
+            : "hover:bg-[#FFBF00]/5"
         }`}
       >
-        <div className="relative w-10 h-10 flex-shrink-0 bg-gray-100 rounded">
+        <div className="relative w-12 h-12 flex-shrink-0 bg-gradient-to-br from-gray-900 to-black rounded-lg border border-[#FFBF00]/20 overflow-hidden group-hover:border-[#FFBF00]/40 transition-colors duration-200">
           <Image
             src={item.image}
             alt={item.title}
             fill
             loading="eager"
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className="object-contain p-1"
+            sizes="48px"
+            className="object-contain p-1.5"
           />
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium line-clamp-1">
+          <p className="text-sm font-medium text-gray-200 line-clamp-1 group-hover:text-[#FFBF00] transition-colors duration-200">
             {item.title}
           </p>
-          <p className="text-xs text-gray-500 mt-0.5">
-            ${item.price}
-          </p>
+          <div className="flex items-center gap-2 mt-0.5">
+            <p className="text-sm font-semibold text-[#FFBF00]">
+              ${item.price.toFixed(2)}
+            </p>
+            {item.category && (
+              <span className="text-xs text-gray-500 capitalize">{item.category}</span>
+            )}
+          </div>
         </div>
+        
+        <ArrowRight className="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:text-[#FFBF00] transition-all duration-200 group-hover:translate-x-1" />
       </button>
     ));
   }, [results, selectedIndex, handleProductClick]);
@@ -216,7 +232,10 @@ export default function SearchBar() {
   return (
     <div ref={searchRef} className="relative w-full max-w-md">
       {/* Search Input */}
-      <div className="relative">
+      <div className="relative group">
+        {/* Search Icon */}
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-[#FFBF00] transition-colors duration-200" />
+        
         <input
           ref={inputRef}
           value={query}
@@ -228,7 +247,7 @@ export default function SearchBar() {
             }
           }}
           placeholder="Search products..."
-          className="w-full bg-black text-white border border-[#FFBF00]/20 rounded-lg px-4 py-2 focus:outline-none pr-10"
+          className="w-full bg-black/50 text-white placeholder-gray-500 border border-[#FFBF00]/20 rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:border-[#FFBF00]/60 focus:bg-black/70 transition-all duration-200"
           aria-label="Search"
           aria-expanded={isOpen}
           aria-autocomplete="list"
@@ -237,7 +256,7 @@ export default function SearchBar() {
         {/* Loading Spinner */}
         {loading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+            <Loader2 className="w-4 h-4 text-[#FFBF00] animate-spin" />
           </div>
         )}
 
@@ -245,58 +264,64 @@ export default function SearchBar() {
         {query && !loading && (
           <button
             onClick={clearSearch}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-400 transition-colors duration-200 cursor-pointer"
             aria-label="Clear search"
           >
-            <XIcon size={16} />
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
       {/* Dropdown Results */}
       {isOpen && (
-        <div className="absolute top-full mt-2 w-full bg-black border border-gray-100 rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto">
+        <div className="absolute top-full mt-2 w-full bg-black/95 backdrop-blur-md border border-[#FFBF00]/20 rounded-xl shadow-2xl z-50 max-h-96 overflow-y-auto animate-in slide-in-from-top-2 duration-200">
           {/* Loading State */}
           {loading && (
-            <div className="p-4 text-center">
-              <div className="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
-              <p className="text-sm text-gray-500 mt-2">Searching...</p>
+            <div className="p-8 text-center">
+              <Loader2 className="w-6 h-6 text-[#FFBF00] animate-spin mx-auto mb-3" />
+              <p className="text-sm text-gray-400">Searching products...</p>
             </div>
           )}
 
           {/* No Results */}
           {!loading && query && results.length === 0 && (
-            <div className="p-6 text-center">
-              <p className="text-sm text-gray-500">No products found</p>
-              <p className="text-xs text-gray-400 mt-1">Try different keywords</p>
-              <div className="mt-3">
-                <button
-                  onClick={handleViewAllResults}
-                  className="text-sm text-blue-600 hover:text-blue-700"
-                >
-                  Search for "{query}" →
-                </button>
-              </div>
+            <div className="p-8 text-center">
+              <Package className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+              <p className="text-sm text-gray-400 mb-1">No products found</p>
+              <p className="text-xs text-gray-500 mb-4">Try different keywords</p>
+              <button
+                onClick={handleViewAllResults}
+                className="inline-flex items-center gap-2 text-sm text-[#FFBF00] hover:text-[#FFBF00]/80 transition-colors duration-200 group"
+              >
+                Search for "{query}" 
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
             </div>
           )}
 
           {/* Results */}
           {!loading && results.length > 0 && (
             <>
-              <div className="p-2 border-b">
-                <p className="text-xs text-gray-500">
-                  Products ({results.length})
-                </p>
+              <div className="px-4 py-2 border-b border-[#FFBF00]/20 bg-gradient-to-r from-[#FFBF00]/5 to-transparent">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3 h-3 text-[#FFBF00]" />
+                  <p className="text-xs font-medium text-[#FFBF00] uppercase tracking-wider">
+                    Products ({results.length})
+                  </p>
+                </div>
               </div>
 
-              {resultItems}
+              <div className="max-h-80 overflow-y-auto">
+                {resultItems}
+              </div>
 
-              <div className="p-2 border-t">
+              <div className="p-2 border-t border-[#FFBF00]/20 bg-[#FFBF00]/5">
                 <button
                   onClick={handleViewAllResults}
-                  className="w-full text-center text-sm text-blue-600 hover:text-blue-700 py-1"
+                  className="w-full flex items-center justify-center gap-2 text-sm text-[#FFBF00] hover:text-[#FFBF00]/80 py-2 rounded-lg transition-all duration-200 group"
                 >
-                  View all results for "{query}" →
+                  View all results for "{query}"
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                 </button>
               </div>
             </>
@@ -305,32 +330,39 @@ export default function SearchBar() {
           {/* Recent Searches (shown when no query) */}
           {!loading && !query && recentSearches.length > 0 && (
             <>
-              <div className="p-2 border-b bg-gray-50">
-                <p className="text-xs text-gray-500">Recent Searches</p>
+              <div className="px-4 py-2 border-b border-[#FFBF00]/20">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-3 h-3 text-gray-500" />
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Recent Searches
+                  </p>
+                </div>
               </div>
 
-              {recentSearches.map((search, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setQuery(search);
-                    performSearch(search);
-                    inputRef.current?.focus();
-                  }}
-                  className="w-full text-left p-2 hover:bg-gray-50 text-sm flex items-center gap-2"
-                >
-                  <span className="text-gray-400">🕒</span>
-                  {search}
-                </button>
-              ))}
+              <div className="max-h-64 overflow-y-auto">
+                {recentSearches.map((search, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setQuery(search);
+                      performSearch(search);
+                      inputRef.current?.focus();
+                    }}
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#FFBF00]/5 transition-colors duration-200 flex items-center gap-3 group"
+                  >
+                    <Clock className="w-4 h-4 text-gray-600 group-hover:text-[#FFBF00] transition-colors duration-200" />
+                    <span className="text-sm text-gray-300 group-hover:text-[#FFBF00] transition-colors duration-200">{search}</span>
+                  </button>
+                ))}
+              </div>
 
-              <div className="p-2 border-t">
+              <div className="p-2 border-t border-[#FFBF00]/20">
                 <button
                   onClick={() => {
                     setRecentSearches([]);
                     localStorage.removeItem("recentSearches");
                   }}
-                  className="w-full text-center text-xs text-gray-400 hover:text-gray-600"
+                  className="w-full text-center text-xs text-gray-500 hover:text-red-400 py-2 transition-colors duration-200"
                 >
                   Clear recent searches
                 </button>
@@ -341,24 +373,31 @@ export default function SearchBar() {
           {/* Suggestions (shown when no query and no recent searches) */}
           {!loading && !query && recentSearches.length === 0 && (
             <>
-              <div className="p-2 border-b">
-                <p className="text-xs text-gray-500">Popular Searches</p>
+              <div className="px-4 py-2 border-b border-[#FFBF00]/20">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-3 h-3 text-gray-500" />
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Popular Searches
+                  </p>
+                </div>
               </div>
 
-              <div className="p-3 flex flex-wrap gap-2">
-                {suggestions.map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    onClick={() => {
-                      setQuery(suggestion);
-                      performSearch(suggestion);
-                      inputRef.current?.focus();
-                    }}
-                    className="text-xs px-3 py-1.5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
+              <div className="p-4">
+                <div className="flex flex-wrap gap-2">
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      onClick={() => {
+                        setQuery(suggestion);
+                        performSearch(suggestion);
+                        inputRef.current?.focus();
+                      }}
+                      className="text-xs px-3 py-1.5 bg-[#FFBF00]/10 border border-[#FFBF00]/20 rounded-full text-[#FFBF00] hover:bg-[#FFBF00]/20 hover:border-[#FFBF00]/40 transition-all duration-200 hover:scale-105"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
               </div>
             </>
           )}
