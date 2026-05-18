@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ShoppingCart, Menu, X, Search } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
-import SearchBar from "./SearchBar";
 import { useState, useEffect, useRef } from "react";
+import SearchBar from "../SearchBar";
 
 export const Header = () => {
   const items = useCartStore((state) => state.items);

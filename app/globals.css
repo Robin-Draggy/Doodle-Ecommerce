@@ -25,64 +25,127 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.borderColor{
-  border: 1px solid #FFBF00;
+.borderColor {
+  border: 1px solid #ffbf00;
   opacity: 0.2;
 }
 
-.bgColor{
-  background-color: #FFBF00;
+.bgColor {
+  background-color: #ffbf00;
 }
 
-.textColor{
-  color: #FFBF00;
+.textColor {
+  color: #ffbf00;
 }
 
-.golden-shadow{
-  box-shadow: 0 4px 4px 0 #FFBF00;
+.golden-shadow {
+  box-shadow: 0 4px 4px 0 #ffbf00;
 }
 
-.thin-border{
-  border: 0.1px solid #FFBF00;
+.thin-border {
+  border: 0.1px solid #ffbf00;
 }
-
 
 @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out;
-        }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
 
 @keyframes fade-in-cart {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out forwards;
-        }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
 
-        @keyframes slide-up {
-          from {
-            transform: translateY(100%);
-          }
-          to {
-            transform: translateY(0);
-          }
-        }
-        .animate-slide-up {
-          animation: slide-up 0.3s ease-out;
-        }
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Global Custom Scrollbar Styles */
+/* Apply to entire site */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FFBF00 rgba(255, 191, 0, 0.2);
+}
+
+/* WebKit Browsers (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px; /* For horizontal scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 191, 0, 0.05);
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFBF00 0%, #FF8F00 100%);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FFD700 0%, #FFA000 100%);
+  transform: scaleX(1.2);
+}
+
+/* Hover effect for all scrollbars */
+*:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFD700 0%, #FFA000 100%);
+  box-shadow: 0 0 5px rgba(255, 191, 0, 0.5);
+}
+
+/* Active/Pulse animation */
+@keyframes scrollbarPulse {
+  0% {
+    background: linear-gradient(180deg, #FFBF00 0%, #FF8F00 100%);
+  }
+  50% {
+    background: linear-gradient(180deg, #FFD700 0%, #FFA000 100%);
+  }
+  100% {
+    background: linear-gradient(180deg, #FFBF00 0%, #FF8F00 100%);
+  }
+}
+
+*:active::-webkit-scrollbar-thumb {
+  animation: scrollbarPulse 1s ease infinite;
+}
+
+/* Optional: Customize specific elements if needed */
+html {
+  scroll-behavior: smooth;
+}
+
+/* For Firefox - ensure consistency */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #FFBF00 rgba(255, 191, 0, 0.2);
+}
