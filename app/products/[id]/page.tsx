@@ -3,6 +3,11 @@ import { getProductById } from "@/services/products";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/components/features/add-to-cart-button";
+import {
+  RiTwitterXLine,
+  RiFacebookFill,
+  RiPinterestLine,
+} from "react-icons/ri";
 
 // Generate dynamic metadata for each product page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -39,16 +44,19 @@ export default async function ProductDetailsPage({ params }: Props) {
     <section className="min-h-screen bg-black py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Back Navigation */}
-        <button 
-          className="group mb-8 flex items-center gap-2 text-gray-400 hover:text-[#FFBF00] transition-colors duration-300"
-        >
-          <svg 
-            className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" 
-            fill="none" 
-            viewBox="0 0 24 24" 
+        <button className="group mb-8 flex items-center gap-2 text-gray-400 hover:text-[#FFBF00] transition-colors duration-300">
+          <svg
+            className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           <span className="text-sm font-medium">Back to Shop</span>
         </button>
@@ -58,7 +66,7 @@ export default async function ProductDetailsPage({ params }: Props) {
           <div className="relative group">
             {/* Animated golden border effect */}
             <div className="absolute -inset-0.5 rounded-2xl  transition duration-500" />
-            
+
             <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-[#FFBF00]/20 overflow-hidden">
               <div className="relative w-full aspect-square">
                 <Image
@@ -71,7 +79,7 @@ export default async function ProductDetailsPage({ params }: Props) {
                   priority
                 />
               </div>
-              
+
               {/* Shine effect */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-[#FFBF00]/10 to-transparent transition-transform duration-1000" />
             </div>
@@ -79,7 +87,7 @@ export default async function ProductDetailsPage({ params }: Props) {
             {/* Thumbnail gallery placeholder - can be extended */}
             <div className="flex gap-3 mt-4 justify-center">
               {[1, 2, 3].map((i) => (
-                <div 
+                <div
                   key={i}
                   className="w-16 h-16 rounded-lg border border-[#FFBF00]/20 bg-gray-900 hover:border-[#FFBF00]/60 transition-all duration-300 cursor-pointer hover:scale-105"
                 />
@@ -108,15 +116,17 @@ export default async function ProductDetailsPage({ params }: Props) {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <svg 
+                  <svg
                     key={i}
-                    className="w-4 h-4 text-[#FFBF00] fill-current" 
+                    className="w-4 h-4 text-[#FFBF00] fill-current"
                     viewBox="0 0 20 20"
                   >
                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                   </svg>
                 ))}
-                <span className="text-gray-400 text-sm ml-2">(128 reviews)</span>
+                <span className="text-gray-400 text-sm ml-2">
+                  (128 reviews)
+                </span>
               </div>
             </div>
 
@@ -143,11 +153,24 @@ export default async function ProductDetailsPage({ params }: Props) {
                   "Premium quality materials",
                   "Free shipping worldwide",
                   "30-day money-back guarantee",
-                  "24/7 customer support"
+                  "24/7 customer support",
                 ].map((feature, index) => (
-                  <li key={index} className="flex items-center gap-2 text-gray-300">
-                    <svg className="w-5 h-5 text-[#FFBF00]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 text-gray-300"
+                  >
+                    <svg
+                      className="w-5 h-5 text-[#FFBF00]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span className="text-sm">{feature}</span>
                   </li>
@@ -167,7 +190,7 @@ export default async function ProductDetailsPage({ params }: Props) {
                     +
                   </button>
                 </div>
-                
+
                 <AddToCartButton
                   product={{
                     id: product.id,
@@ -177,7 +200,7 @@ export default async function ProductDetailsPage({ params }: Props) {
                   }}
                 />
               </div>
-              
+
               <p className="text-xs text-gray-500 text-center">
                 Free shipping on orders over $50
               </p>
@@ -186,16 +209,18 @@ export default async function ProductDetailsPage({ params }: Props) {
             {/* Social Share */}
             <div className="flex items-center gap-4 pt-4">
               <span className="text-sm text-gray-400">Share:</span>
-              {["twitter", "facebook", "pinterest"].map((social) => (
-                <button
-                  key={social}
-                  className="text-gray-400 hover:text-[#FFBF00] transition-colors duration-300"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M...placeholder for social icons..." />
-                  </svg>
-                </button>
-              ))}
+
+              <button className="text-gray-400 hover:text-[#FFBF00] transition-colors">
+                <RiTwitterXLine className="w-5 h-5" />
+              </button>
+
+              <button className="text-gray-400 hover:text-[#FFBF00] transition-colors">
+                <RiFacebookFill className="w-5 h-5" />
+              </button>
+
+              <button className="text-gray-400 hover:text-[#FFBF00] transition-colors">
+                <RiPinterestLine className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
@@ -203,7 +228,9 @@ export default async function ProductDetailsPage({ params }: Props) {
         {/* Related Products Section - Optional */}
         <div className="mt-20">
           <div className="border-t border-[#FFBF00]/20 pt-8">
-            <h2 className="text-2xl font-bold text-white mb-6">You Might Also Like</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">
+              You Might Also Like
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {/* Related products can be mapped here */}
             </div>

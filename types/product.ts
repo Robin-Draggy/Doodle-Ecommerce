@@ -10,3 +10,20 @@ export type Product = {
     count: number;
   };
 };
+
+export type ProductQuery = {
+  page: number;
+  limit: number;
+
+  category?: string;
+  search?: string;
+  min?: string;
+  max?: string;
+  sort?: string;
+};
+
+export type ProductResponse = {
+  products: Product[];
+  total: number;
+  totalPages: number;
+};

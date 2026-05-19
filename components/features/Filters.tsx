@@ -33,24 +33,43 @@ export const Filters = ({ categories }: Props) => {
   const updateURL = useCallback((params: URLSearchParams) => {
     const query = params.toString();
     router.replace(query ? `/products?${query}` : "/products");
-  }, [router]);
+  }, []);
 
   // Debounced price filters
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
-      
-      if (min && parseFloat(min) >= 0) params.set("min", min);
-      else params.delete("min");
-      
-      if (max && parseFloat(max) >= 0) params.set("max", max);
-      else params.delete("max");
-      
-      updateURL(params);
-    }, 500);
+  const timeoutId = setTimeout(() => {
+    const params = new URLSearchParams(searchParams.toString());
 
-    return () => clearTimeout(timeoutId);
-  }, [min, max, searchParams, updateURL]);
+    if (min && parseFloat(min) >= 0) {
+      params.set("min", min);
+    } else {
+      params.delete("min");
+    }
+
+    if (max && parseFloat(max) >= 0) {
+      params.set("max", max);
+    } else {
+      params.delete("max");
+    }
+
+    const nextQuery = params.toString();
+    const currentQuery = searchParams.toString();
+
+    // only navigate if changed
+    if (nextQuery !== currentQuery) {
+      router.replace(
+        nextQuery ? `/products?${nextQuery}` : "/products"
+      );
+    }
+  }, 500);
+
+  return () => clearTimeout(timeoutId);
+}, [min, max]);
+
+  useEffect(() => {
+  setMin(searchParams.get("min") || "");
+  setMax(searchParams.get("max") || "");
+}, [searchParams]);
 
   // Category change
   const handleCategory = (value: string) => {
