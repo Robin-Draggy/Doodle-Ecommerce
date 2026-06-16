@@ -22,7 +22,8 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
   delay: number
 ): T {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  // Fix: Provide initial value (null) with proper typing
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   return useCallback(
     ((...args: any[]) => {
