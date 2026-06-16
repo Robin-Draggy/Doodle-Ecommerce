@@ -68,7 +68,7 @@ export default function SearchBar() {
     setLoading(true);
     try {
       const data = await searchProducts(searchQuery);
-      setResults(data.slice(0, 5));
+      setResults(data.products?.slice(0, 5) || []);
       setIsOpen(true);
     } catch (error) {
       console.error("Search failed:", error);
